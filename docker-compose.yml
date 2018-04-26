@@ -1,0 +1,84 @@
+version: '2'
+
+services:
+
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: testmaker
+      MYSQL_USER: testmaker
+      MYSQL_ROOT_PASSWORD: testmakerdb
+      MYSQL_PASSWORD: testmakerdb
+
+  php:
+    build:
+      context: ./docker/php7-fpm
+    image: laravel:php-fpm
+    container_name: php
+    depends_on:
+      - mysql
+      # - redis
+      # - elasticsearch
+      # - mailcatcher
+    entrypoint:
+      - php-fpm
+    environment:
+      DEBUG: 'true'
+      MYSQL_HOST: 'mysql'
+      DB_DATABASE: 'testmakerdb'
+      DB_USERNAME: 'testmaker'
+      DB_PASSWORD: 'testmaker'
+      # REDIS_HOST: 'redis'
+      # ELASTICSEARCH_HOST: 'elasticsearch'
+      # MAILCATCHER_HOST: 'mailcatcher'
+    volumes:
+      - ./web/:/var/www/html:rw
+
+  web:
+    image: nginx:alpine
+    container_name: nginx
+    depends_on:
+      - php
+    volumes_from:
+      - php
+    volumes:
+      - ./docker/nginx/default:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+  # redis:
+  #   image: redis:alpine
+  #   container_name: redis
+  #   volumes:
+  #     - redis-data:/data
+
+  # elasticsearch:
+  #   image: elasticsearch:alpine
+  #   container_name: elasticsearch
+  #   volumes:
+  #     - elasticsearch-data:/data
+  #     - ./docker/elasticsearch/logging.yml:/usr/share/elasticsearch/config/logging.yml
+  #     - ./docker/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  # mailcatcher:
+  #   image: tophfr/mailcatcher
+  #   container_name: mailcatcher
+  #   environment:
+  #     MAIL_HOST: mailcatcher
+  #     MAIL_PORT: 1025
+  #   ports:
+  #     - 1080:1080
+  #     - 1025:1025
+
+
+volumes:
+  # redis-data:
+  #   driver: "local"
+  # elasticsearch-data:
+  #   driver: "local"
+  mysql-data:
+    driver: "local"
