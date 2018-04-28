@@ -1,14 +1,24 @@
+@import "paper/variables";
+@import "paper/mixins";
 
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import "paper/typography";
 
-// Variables
-@import "variables";
+// Core CSS
+@import "paper/misc";
+@import "paper/sidebar-and-main-panel";
+@import "paper/buttons";
+@import "paper/inputs";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "paper/alerts";
+@import "paper/tables";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+@import "paper/checkbox-radio";
+@import "paper/navbars";
+@import "paper/footers";
+
+// Fancy Stuff
+
+@import "paper/dropdown";
+@import "paper/cards";
+@import "paper/chartist";
+@import "paper/responsive";

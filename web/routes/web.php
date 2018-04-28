@@ -11,6 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+
+Route::get(
+    '/', 
+    function() {
+        return redirect()->route('dashboard');
+    }
+)->middleware('auth');
+
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::middleware(['auth'])->group(
+    function () {
+        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+    }
+);
