@@ -15,7 +15,7 @@ Auth::routes();
 
 Route::get(
     '/', 
-    function() {
+    function () {
         return redirect()->route('dashboard');
     }
 )->middleware('auth');
@@ -24,6 +24,11 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::middleware(['auth'])->group(
     function () {
-        Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+
+        Route::get('/dashboard',   'DashboardController@index')->name('dashboard');
+        Route::get('/exams',       'ExamController@index')->name('exams');
+        Route::get('/questions',   'QuestionController@index')->name('questions');
+        Route::get('/formatting',  'FormattingController@index')->name('formatting');
+
     }
 );

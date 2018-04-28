@@ -13,35 +13,25 @@
 
     <!--  Libs CSS     -->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/animate.min.css" rel="stylesheet" />
-    <link href="css/themify-icons.css" rel="stylesheet" />
-
     <!--  App CSS     -->
-    <link href="css/paper-dashboard.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
-
     <!--  Fonts and icons     -->
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 
 </head>
-<body>
+<body class="authPage">
 
 <div class="container">
   <div class="row">
-    <div class="col-sm-6 col-md-4 col-md-offset-4">
-        <h1 class="text-center login-title">Test Maker</h1>
-        <div class="card card-user">
+    <div class="col-sm-7 col-md-5 col-md-offset-3">
+        <h1 class="text-center login-title" class="login-header">
+            <img id="logo" src="img/logo-single.png" alt="Test Maker" class="logo"><br/>
+            <img src="img/name.png" alt="Test Maker" class="logo-name">
+        </h1>
+        <div class="card card-user" class="login-card">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <div class="image">
-                    <img src="img/top.jpg" alt="...">
-                </div>
                 <div class="content">
-                    <div class="author">
-                        <img class="avatar border-white" src="img/avatar.png" alt="...">
-                        <h4 class="title">Credenciais<br></h4>
-                    </div>
                     <p class="description text-center">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email de acesso</label>
@@ -63,9 +53,7 @@
                 <div class="text-left col-md-offset-1">
                     <div class="row">
                         <div class="col-md-7">
-                        <a class=" btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Esqueceu a senha?') }}
-                                    </a>
+                            <a class=" btn-link" href="{{ route('password.request') }}">{{ __('Esqueceu a senha?') }}</a>
                         </div>
                         <div class="col-md-5 text-right">
                             <button type="submit" class="btn btn-info btn-fill">Entrar</button>
@@ -82,10 +70,16 @@
 </body>
 
     <script src="js/app.js" type="text/javascript"></script>
-
+    <script src="http://www.inwebson.com/demo/jqfloat/jqfloat.min.js"></script>
     <!-- Paper Dashboard Core javascript and methods for Demo purpose -->
 	<script src="js/paper-dashboard.js"></script>
-	<!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 
+    <script>
+        $('#logo').jqFloat({
+            width:0,
+            height:50,
+            speed:1800
+        });
+    </script>
 
 </html>

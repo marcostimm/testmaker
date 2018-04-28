@@ -4365,3 +4365,27 @@ textarea.form-control {
   }
 }
 
+.authPage {
+  background-color: #F8F8F8;
+}
+
+.authPage .login-header {
+  margin-top: 50px;
+  height: 280px;
+}
+
+.authPage .logo {
+  position: absolute;
+  height: 185px;
+  left: 150px;
+}
+
+.authPage .logo-name {
+  width: 180px;
+  margin-top: 170px;
+}
+
+.authPage .login-card {
+  margin-top: 20px;
+}
+

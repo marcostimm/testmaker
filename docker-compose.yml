@@ -20,6 +20,8 @@ services:
       context: ./docker/php7-fpm
     image: laravel:php-fpm
     container_name: php
+    links:
+      - mysql
     depends_on:
       - mysql
       # - redis
@@ -30,9 +32,9 @@ services:
     environment:
       DEBUG: 'true'
       MYSQL_HOST: 'mysql'
-      DB_DATABASE: 'testmakerdb'
+      DB_DATABASE: 'testmaker'
       DB_USERNAME: 'testmaker'
-      DB_PASSWORD: 'testmaker'
+      DB_PASSWORD: 'testmakerdb'
       # REDIS_HOST: 'redis'
       # ELASTICSEARCH_HOST: 'elasticsearch'
       # MAILCATCHER_HOST: 'mailcatcher'
