@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { Link, NavLink } from 'react-router-dom'
 
 const Sidebar = () => {
-
     return (
         <div className="sidebar" data-background-color="white" data-active-color="danger">
             <div className="sidebar-wrapper">
@@ -12,41 +12,41 @@ const Sidebar = () => {
                 </div>
 
                 <ul className="nav">
-                    <li className="active">
-                        <a href="dashboard">
+                    <li>
+                        <NavLink to={'/dashboard'}>
                             <i className="ti-panel"></i>
-                            <p>Painel</p>
-                        </a>
+                            <p>Dashboard</p>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="exams">
+                        <NavLink to={'/exams'}>
                             <i className="ti-files"></i>
                             <p>Provas</p>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="questions">
+                        <NavLink to={'/questions'}>
                             <i className="ti-list"></i>
                             <p>Questões</p>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="subjects">
+                        <NavLink to={'/subjects'}>
                             <i className="ti-notepad"></i>
                             <p>Assuntos</p>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="formatting">
+                        <NavLink to={'/formatting'}>
                             <i className="ti-ruler-alt"></i>
                             <p>Formatação</p>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
-                        <a href="entities">
+                    <NavLink to={'/entities'}>
                             <i className="ti-briefcase"></i>
                             <p>Entidades</p>
-                        </a>
+                        </NavLink>
                     </li>
                     <li>
                         <a href="logout">

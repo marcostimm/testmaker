@@ -38,13 +38,6 @@
         padding: 18px 0px;
         margin: 0 20px;
 
-        p{
-            float: left;
-            font-size: 20px;
-            margin: 10px 10px;
-            line-height: 20px;
-        }
-
         .simple-text{
             text-transform: uppercase;
             padding: $padding-small-vertical $padding-zero;
@@ -72,7 +65,7 @@
                 opacity: 1;
             }
 
-            &.active > a{
+            > a.active {
                 color: $primary-color;
                 opacity: 1;
 

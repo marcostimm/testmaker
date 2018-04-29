@@ -12,5 +12,16 @@ let mix = require('laravel-mix');
  */
 
 mix.react('resources/assets/js/app.js', 'public/js')
-//    .sass('resources/assets/sass/paper-dashboard.scss', 'public/css/paper-dashboard.css')
-   .sass('resources/assets/sass/app.scss', 'public/css/app.css');
+    .sass('resources/assets/sass/app.scss', 'public/css/app.css')
+    .scripts(
+        [
+            'resources/assets/js/chartist.min.js'
+        ], 
+        'public/js/all.js')
+    .styles([
+            'resources/assets/css/bootstrap.min.css',
+            'resources/assets/css/animate.min.css',
+            'resources/assets/css/themify-icons.css',
+        ], 
+        'public/css/all.css');
+    //.sass('resources/assets/sass/paper-dashboard.scss', 'public/css/paper-dashboard.css')

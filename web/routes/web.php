@@ -12,23 +12,21 @@
 */
 
 Auth::routes();
-
-Route::get(
-    '/', 
-    function () {
-        return redirect()->route('dashboard');
-    }
-)->middleware('auth');
-
 Route::get('/logout', 'Auth\LoginController@logout');
+Route::redirect('/', '/dashboard', 301);
 
-Route::middleware(['auth'])->group(
-    function () {
+Route::any('{all}', 'ReactController@index')
+        ->where(['all' => '.*'])
+        ->middleware('auth');
 
-        Route::get('/dashboard',   'DashboardController@index')->name('dashboard');
-        Route::get('/exams',       'ExamController@index')->name('exams');
-        Route::get('/questions',   'QuestionController@index')->name('questions');
-        Route::get('/formatting',  'FormattingController@index')->name('formatting');
 
-    }
-);
+// Route::middleware(['auth'])->group(
+//     function () {
+
+//         Route::get('/dashboard',   'DashboardController@index')->name('dashboard');
+//         Route::get('/exams',       'ExamController@index')->name('exams');
+//         Route::get('/questions',   'QuestionController@index')->name('questions');
+//         Route::get('/formatting',  'FormattingController@index')->name('formatting');
+
+//     }
+// );

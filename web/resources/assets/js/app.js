@@ -8,4 +8,4 @@
 require('./bootstrap');
 
 /* Import the Main component */
-import Main from './components/Main';
+import Main from './screens/Main';
