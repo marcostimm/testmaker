@@ -19,7 +19,9 @@
     "lodash": "^4.17.4",
     "popper.js": "^1.12",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react-dom": "^16.2.0",
+    "validator": "^5.4.0",
+    "jwt-decode": "^2.1.0"
   },
   "dependencies": {
     "react-router": "^4.2.0",

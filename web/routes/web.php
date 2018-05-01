@@ -12,12 +12,19 @@
 */
 
 Auth::routes();
-Route::get('/logout', 'Auth\LoginController@logout');
 Route::redirect('/', '/dashboard', 301);
 
-Route::any('{all}', 'ReactController@index')
-        ->where(['all' => '.*'])
-        ->middleware('auth');
+Route::any('{slug}', 'ReactController@index')
+        // ->where(['all' => '.*'])
+        // ->middleware('auth')
+        ->where('slug', '(?!api)([A-z\d-\/_.]+)?');
+
+
+// Route::get('{slug}', function() {
+//         return view('index');
+//     })
+//     ->where('slug', '(?!api)([A-z\d-\/_.]+)?');
+     
 
 
 // Route::middleware(['auth'])->group(
