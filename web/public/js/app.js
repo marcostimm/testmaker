@@ -28855,8 +28855,8 @@ var LoginForm = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
         _this.state = {
-            email: 'timm@marcos.im',
-            password: 'rossow',
+            email: '',
+            password: '',
             errors: {},
             isLoading: false
         };
