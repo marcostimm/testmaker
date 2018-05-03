@@ -4357,10 +4357,6 @@ textarea.form-control {
   }
 }
 
-.authPage {
-  background-color: #F8F8F8;
-}
-
 .authPage .login-header {
   margin-top: 50px;
   height: 280px;
@@ -4379,5 +4375,9 @@ textarea.form-control {
 
 .authPage .login-card {
   margin-top: 20px;
+}
+
+.bodypage {
+  background-color: #F8F8F8 !important;
 }
 

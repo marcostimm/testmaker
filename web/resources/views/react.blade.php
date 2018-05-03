@@ -19,9 +19,8 @@
     <!--  Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
-
 </head>
-<body>
+<body class="bodypage">
     <div id="root"></div>
 </body>
     <script src="{{mix('js/all.js')}}" ></script>

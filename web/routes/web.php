@@ -11,7 +11,7 @@
 |
 */
 
-Auth::routes();
+// Auth::routes();
 Route::redirect('/', '/dashboard', 301);
 
 Route::any('{slug}', 'ReactController@index')

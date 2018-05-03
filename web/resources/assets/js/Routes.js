@@ -4,19 +4,21 @@ import { Route, Switch } from 'react-router-dom'
 import Dashboard from './screens/Dashboard';
 import NotFound  from './screens/NotFound';
 import Exams     from './screens/Exams';
-import Empry     from './screens/Empty';
+import Empty     from './screens/Empty';
+import LoginForm from './screens/LoginForm';
+import requireAuth from './utils/requireAuth';
 
 class Routes extends Component {
     render() {
         return (
             <Switch>
                 {/* <Route exact={true} path="/" component={Dashboard} /> */}
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/exams" component={Exams} />
-                <Route path="/questions" component={Empry} />
-                <Route path="/subjects" component={Empry} />
-                <Route path="/formatting" component={Empry} />
-                <Route path="/entities" component={Empry} />
+                <Route path="/dashboard" component={requireAuth(Dashboard)} />
+                <Route path="/exams" component={requireAuth(Exams)} />
+                <Route path="/questions" component={requireAuth(Empty)} />
+                <Route path="/subjects" component={requireAuth(Empty)} />
+                <Route path="/formatting" component={requireAuth(Empty)} />
+                <Route path="/entities" component={requireAuth(Empty)} />
 
                 {/* 404 not found */}
                 <Route component={NotFound} />
