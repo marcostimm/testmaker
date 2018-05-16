@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 import Dashboard from './screens/Dashboard';
 import NotFound  from './screens/NotFound';
@@ -23,9 +24,8 @@ class Routes extends Component {
                 {/* 404 not found */}
                 <Route component={NotFound} />
             </Switch>
-
         );
     }
 }
- 
+
 export default Routes;

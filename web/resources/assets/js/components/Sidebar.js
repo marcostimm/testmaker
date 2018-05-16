@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, BrowserRouter, Route,Router } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
 
@@ -20,15 +20,17 @@ class Sidebar extends Component {
                         </a>
                     </div>
 
+                    {/* <BrowserRouter> */}
+                    <Route>
                     <ul className="nav">
                         <li>
-                            <NavLink to={'/dashboard'}>
+                            <NavLink activeClassName="active" exact to={'/dashboard'}>
                                 <i className="ti-panel"></i>
                                 <p>Dashboard</p>
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={'/exams'}>
+                            <NavLink activeClassName="active" exact to={'/exams'}>
                                 <i className="ti-files"></i>
                                 <p>Provas</p>
                             </NavLink>
@@ -63,6 +65,8 @@ class Sidebar extends Component {
                             </a>
                         </li>
                     </ul>
+                    </Route>
+                    {/* </BrowserRouter> */}
                 </div>
             </div>
         )
@@ -75,4 +79,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { logout })(Sidebar);
+export default connect(mapStateToProps, {logout}, null, { pure: false })(Sidebar);

@@ -16,8 +16,7 @@ mix.react('resources/assets/js/app.js', 'public/js')
     .scripts(
         [
             'resources/assets/js/lib/jquery-1.10.2.js',
-            'resources/assets/js/lib/chartist.min.js',
-            'resources/assets/js/lib/jqfloat.js'
+            'resources/assets/js/lib/chartist.min.js'
         ], 
         'public/js/all.js')
     .styles([

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Transition } from 'react-spring';
 import PropTypes from 'prop-types';
+import { Animated } from 'react-web-animation';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import Validator from 'validator';
@@ -7,7 +9,7 @@ import validateInput from '../utils/loginValidations';
 import { login } from '../actions/authActions';
 
 function animateLogo() {
-    $('#logo').jqFloat({width:0,height:50,speed:1800});
+    // $('#logo').jqFloat({width:0,height:50,speed:1800});
 }
 
 class LoginForm extends React.Component {
