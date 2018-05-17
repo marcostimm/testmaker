@@ -20,7 +20,6 @@ class Routes extends Component {
                 <Route path="/subjects" component={requireAuth(Empty)} />
                 <Route path="/formatting" component={requireAuth(Empty)} />
                 <Route path="/entities" component={requireAuth(Empty)} />
-
                 {/* 404 not found */}
                 <Route component={NotFound} />
             </Switch>

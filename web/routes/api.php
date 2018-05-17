@@ -38,6 +38,9 @@ Route::middleware('throttle:240,1')->group( function () {
     Route::post('/auth/login', 'AuthController@login');
 });
 
+// Get exams list
+Route::get('/exams', 'ExamController@index');
+
 Route::group(['middleware' => ['auth:api']], function () {
 
     // Get the user information

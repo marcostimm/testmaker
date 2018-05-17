@@ -1,47 +1,62 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import NavTop                   from '../components/NavTop';
-import Sidebar                  from '../components/Sidebar';
-import Footer                   from '../components/Footer';
-import EmptyData                from './EmptyData';
+import EmptyData        from './EmptyData';
+import TableView        from '../components/widgets/TableView';
+import Loading          from '../components/widgets/Loading';
+import { examsList }    from '../actions/examsActions';
 
-const Dashboard = () => {
+class Exams extends Component {
+    
+    constructor(props) {
+        super(props);
 
-    return (
-        <div className="container-fluid">
-            <div className="row">
-            <EmptyData />
-                {/* <div className="col-md-12">
-                    <div className="card">
-                        <div className="header">
-                            <h4 className="title">Lista de Provas</h4>
-                            <p className="category">Provas geradas</p>
-                        </div>
-                        <div className="content table-responsive table-full-width">
-                            <table className="table table-striped">
-                                <thead>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Salary</th>
-                                    <th>Country</th>
-                                    <th>City</th>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Dakota Rice</td>
-                                        <td>$36,738</td>
-                                        <td>Niger</td>
-                                        <td>Oud-Turnhout</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div> */}
+        this.state = {
+          exams: [],
+          examsData:    [],
+          errors:       {},
+          isLoading:    true
+        };
+    }
+
+    loadExams() {
+        this.setState({ errors: {}, isLoading: true });
+        this.props.examsList().then(
+            (res) => { console.log(">>> " + this.state.getExams); /*this.setState({examsData: res.data, isLoading: false})*/ },
+            (err) => this.setState({ errors: err.response, isLoading: false })
+        );
+    }
+
+    componentDidMount() {
+        this.loadExams()
+    }
+
+    render() {
+        const { examsData, isLoading } = this.props;
+        const { isAuthenticated, user } = this.props.auth;
+
+        var loginButton;
+        // if (isLoading) {
+        //   loginButton = <Loading />;
+        // } else {
+        //   loginButton = <TableView 
+        //     title="Lista de Provas" 
+        //     header={["ID","Título","Data","Entidade","Ações"]}
+        //     data={examsData} />;
+        // }
+
+        return (
+            <div className="container-fluid">
+                <div className="row">
+                    {loginButton}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default Dashboard ;
+const mapStateToProps=(state)=>{
+    return state
+}
+
+export default connect(mapStateToProps, { examsList } )(Exams);

@@ -4413,3 +4413,8 @@ textarea.form-control {
   line-height: 1.42857;
 }
 
+.loadingIcon {
+  margin-top: 100px;
+  width: 160px;
+}
+

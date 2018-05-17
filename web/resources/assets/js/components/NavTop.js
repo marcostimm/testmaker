@@ -19,7 +19,7 @@ const NavTop = () => {
                     <li>
                         <a href="#">
                             <i className="ti-settings"></i>
-                            <p>Configurações</p>
+                            <p>&nbsp;Configurações</p>
                         </a>
                     </li>
                 </ul>

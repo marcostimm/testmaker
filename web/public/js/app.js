@@ -1448,7 +1448,7 @@ var NavTop = function NavTop() {
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 "p",
                                 null,
-                                "Configura\xE7\xF5es"
+                                "\xA0Configura\xE7\xF5es"
                             )
                         )
                     )
@@ -3306,7 +3306,7 @@ module.exports = isTypedArray;
 
 function setCurrentUser(user) {
   return {
-    type: __WEBPACK_IMPORTED_MODULE_3__types__["a" /* SET_CURRENT_USER */],
+    type: __WEBPACK_IMPORTED_MODULE_3__types__["b" /* SET_CURRENT_USER */],
     user: user
   };
 }
@@ -3322,7 +3322,6 @@ function logout() {
 function login(data) {
   return function (dispatch) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/auth/login', data).then(function (res) {
-      console.log(res);
       var token = res.data.result.token;
       localStorage.setItem('jwtToken', token);
       Object(__WEBPACK_IMPORTED_MODULE_1__utils_setAuthorizationToken__["a" /* default */])(token);
@@ -17713,8 +17712,10 @@ function setAuthorizationToken(token) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SET_CURRENT_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SET_CURRENT_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GET_EXAMS; });
 var SET_CURRENT_USER = 'SET_CURRENT_USER';
+var GET_EXAMS = 'GET_EXAMS';
 
 /***/ }),
 /* 78 */
@@ -65509,7 +65510,7 @@ var initialState = {
   var action = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
   switch (action.type) {
-    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["a" /* SET_CURRENT_USER */]:
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["b" /* SET_CURRENT_USER */]:
       return {
         isAuthenticated: !__WEBPACK_IMPORTED_MODULE_1_lodash_isEmpty___default()(action.user),
         user: action.user
@@ -72998,10 +72999,18 @@ var NotFound = function NotFound() {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_NavTop__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Sidebar__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Footer__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__EmptyData__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__EmptyData__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_widgets_TableView__ = __webpack_require__(352);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_widgets_Loading__ = __webpack_require__(353);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__actions_examsActions__ = __webpack_require__(355);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 
 
@@ -73009,20 +73018,83 @@ var NotFound = function NotFound() {
 
 
 
-var Dashboard = function Dashboard() {
 
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        { className: 'container-fluid' },
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            'div',
-            { className: 'row' },
-            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__EmptyData__["a" /* default */], null)
-        )
-    );
+
+var Exams = function (_Component) {
+    _inherits(Exams, _Component);
+
+    function Exams(props) {
+        _classCallCheck(this, Exams);
+
+        var _this = _possibleConstructorReturn(this, (Exams.__proto__ || Object.getPrototypeOf(Exams)).call(this, props));
+
+        _this.state = {
+            exams: [],
+            examsData: [],
+            errors: {},
+            isLoading: true
+        };
+        return _this;
+    }
+
+    _createClass(Exams, [{
+        key: 'loadExams',
+        value: function loadExams() {
+            var _this2 = this;
+
+            this.setState({ errors: {}, isLoading: true });
+            this.props.examsList().then(function (res) {
+                console.log(">>> " + _this2.state.getExams); /*this.setState({examsData: res.data, isLoading: false})*/
+            }, function (err) {
+                return _this2.setState({ errors: err.response, isLoading: false });
+            });
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this.loadExams();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                examsData = _props.examsData,
+                isLoading = _props.isLoading;
+            var _props$auth = this.props.auth,
+                isAuthenticated = _props$auth.isAuthenticated,
+                user = _props$auth.user;
+
+
+            var loginButton;
+            // if (isLoading) {
+            //   loginButton = <Loading />;
+            // } else {
+            //   loginButton = <TableView 
+            //     title="Lista de Provas" 
+            //     header={["ID","Título","Data","Entidade","Ações"]}
+            //     data={examsData} />;
+            // }
+
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'container-fluid' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'row' },
+                    loginButton
+                )
+            );
+        }
+    }]);
+
+    return Exams;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+var mapStateToProps = function mapStateToProps(state) {
+    return state;
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (Dashboard);
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, { examsList: __WEBPACK_IMPORTED_MODULE_5__actions_examsActions__["a" /* examsList */] })(Exams));
 
 /***/ }),
 /* 344 */
@@ -73201,6 +73273,177 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__screens_EmptyData__ = __webpack_require__(344);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+var TableView = function (_Component) {
+    _inherits(TableView, _Component);
+
+    function TableView() {
+        _classCallCheck(this, TableView);
+
+        return _possibleConstructorReturn(this, (TableView.__proto__ || Object.getPrototypeOf(TableView)).apply(this, arguments));
+    }
+
+    _createClass(TableView, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                title = _props.title,
+                subtitle = _props.subtitle,
+                header = _props.header,
+                data = _props.data;
+
+            // Empty Data
+
+            if (data.length == 0) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__screens_EmptyData__["a" /* default */], null);
+            }
+
+            // Render Table
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                { className: 'col-md-12' },
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'card' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'header' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'h4',
+                            { className: 'title' },
+                            title
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'p',
+                            { className: 'category' },
+                            subtitle
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'content table-responsive table-full-width' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'table',
+                            { className: 'table table-striped' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'thead',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'tr',
+                                    null,
+                                    header.map(function (h, i) {
+                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                            'th',
+                                            { key: i },
+                                            h
+                                        );
+                                    })
+                                )
+                            ),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'tbody',
+                                null,
+                                data.map(function (line, j) {
+                                    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                        'tr',
+                                        { key: j },
+                                        line.map(function (column, k) {
+                                            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                'td',
+                                                { key: k },
+                                                column
+                                            );
+                                        })
+                                    );
+                                })
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return TableView;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* unused harmony default export */ var _unused_webpack_default_export = (TableView);
+
+/***/ }),
+/* 353 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+
+
+var Loading = function Loading() {
+
+  return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+    "div",
+    { className: "row text-center" },
+    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("img", { className: "loadingIcon", src: "img/loading.gif", alt: "" })
+  );
+};
+
+/* unused harmony default export */ var _unused_webpack_default_export = (Loading);
+
+/***/ }),
+/* 354 */,
+/* 355 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export getExams */
+/* harmony export (immutable) */ __webpack_exports__["a"] = examsList;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jwt_decode__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jwt_decode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jwt_decode__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__types__ = __webpack_require__(77);
+
+
+
+
+function getExams(exams) {
+  console.log(exams);
+  return {
+    type: __WEBPACK_IMPORTED_MODULE_2__types__["a" /* GET_EXAMS */],
+    exams: exams
+  };
+}
+
+function examsList(data) {
+  return function (dispatch) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/exams').then(function (res) {
+      dispatch(getExams(res.data));
+    });
+  };
+}
 
 /***/ })
 /******/ ]);

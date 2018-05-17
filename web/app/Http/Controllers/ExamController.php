@@ -13,7 +13,14 @@ class ExamController extends Controller
      */
     public function index()
     {
-        //
+        // $exams = Exams::all();
+        $exams = [
+            [1, "Prova muito difícil", "01/01/2018", "FAESA", "X"],
+            [2, "Prova fácil", "02/01/2018", "FAESA", "X"],
+            [3, "Prova médio", "03/01/2018", "FAESA", "X"]
+        ];
+        return response()->json($exams);
+
     }
 
     /**
