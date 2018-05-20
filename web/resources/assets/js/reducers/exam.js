@@ -1,7 +1,8 @@
 import { GET_EXAMS } from '../actions/types';
+import isEmpty from 'lodash/isEmpty';
 
 const initialState = {
-  isLoading: false,
+  isLoaded: false,
   exams: {}
 };
 
@@ -9,8 +10,8 @@ export default (state = initialState, action = {}) => {
   switch(action.type) {
     case GET_EXAMS:
       return {
-        ...state,
-        exams: action.exams
+        isLoaded:   action.isLoaded,
+        exams:      action.exams
       };
     default: return state;
   }

@@ -1,15 +1,36 @@
 import React, { Component } from 'react';
 import EmptyData            from '../../screens/EmptyData';
+import { NavLink }          from 'react-router-dom';
+import TableViewPagination  from './TableViewPagination';
 
 class TableView extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.onChangePage   = this.onChangePage.bind(this);
+    }
+
+    onDelete(id) {
+        if (typeof this.props.onDelete === 'function') {
+            this.props.onDelete(id);
+        }
+    }
+
+    onChangePage(page) {
+        if (typeof this.props.onChangePage === 'function') {
+            this.props.onChangePage(page);
+        }
+    }
+
     render() {
-        const { title, subtitle, header, data } = this.props;
+        const { title, subtitle, header, body, content, autoLink, actions } = this.props;
+        const numOfColumns = header.length + (actions? 1 : 0)
 
         // Empty Data
-        if ( data.length == 0 ) {
+        if ( typeof content == 'undefined' || content.length == 0 ) {
             return (<EmptyData />)
-        } 
+        }
 
         // Render Table
         return (
@@ -23,18 +44,32 @@ class TableView extends Component {
                         <table className="table table-striped">
                             <thead>
                                 <tr>
-                                    {header.map((h, i) => <th key={i} >{h}</th>)}
+                                    { header.map((title, i) => <th key={i}>{title}</th>) }
+                                    { ( actions ) ? <th>Ações</th> : null}
                                 </tr>
                             </thead>
                             <tbody>
-                                {data.map((line, j) => 
+                                {Object.keys(content.data).map((line, j) => 
                                     <tr key={j}>
-                                        {line.map((column, k) => 
-                                            <td key={k}>{column}</td>
-                                        )}
+                                        { Object.keys(content.data[line]).map((column, k) => {
+                                            if( typeof body !== 'undefined' && body.length > 0 ) {
+                                            return (body.indexOf(column) >= 0) ? (
+                                                (k <= 2 && autoLink) ?
+                                                <td key={k}><NavLink to={"/subjects/" + (content.data[line]).id}>{content.data[line][column]}</NavLink></td> :
+                                                <td key={k}>{content.data[line][column]}</td>
+                                                ) : null
+                                            } else {
+                                                return <td key={k}>{content.data[line][column]}</td>
+                                            }
+                                        })}
+                                        { ( actions ) ? (
+                                            (actions.indexOf('delete') >= 0) ? <td><button onClick={() => this.onDelete((content.data[line]).id) } className="btn btn-danger btn-fill small-btn"><i className="ti-close"></i></button></td> : null
+                                        ) : null }
                                     </tr>
                                 )}
                             </tbody>
+
+                            <TableViewPagination onChangePage={this.onChangePage} data={content} numOfColumns={numOfColumns} />
                         </table>
                     </div>
                 </div>

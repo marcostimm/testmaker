@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "prop-types": "^15.6.1",
+    "react-bs-notifier": "^5.0.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-web-animation": "^0.7.0",

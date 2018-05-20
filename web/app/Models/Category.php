@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Auth;
 
 class Category extends Model
 {
@@ -16,4 +17,12 @@ class Category extends Model
         'name',
         'slug'
     ];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['user_id'] = Auth::User()->id;
+
+        $this->attributes['name']    = $value;
+        $this->attributes['slug']    = str_slug($value, '-');
+    }
 }

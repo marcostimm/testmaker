@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Auth;
 
 /**
  * UserScopeTrait Trait
@@ -29,7 +30,8 @@ trait UserScopeTrait {
     */
     public function apply( Builder $builder, Model $model )
     {
-        $builder->where('user_id', '=', 1);
+        $user = Auth::User();
+        $builder->where('user_id', '=', $user->id);
     }
 
 }

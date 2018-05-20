@@ -4386,8 +4386,22 @@ textarea.form-control {
   min-height: 64px;
 }
 
+.icon-small {
+  font-size: 1em;
+}
+
 .emptyIcon {
   width: 300px;
+}
+
+.no-padding {
+  padding: 0px;
+}
+
+.small-btn {
+  width: 25px;
+  padding-top: 2px;
+  padding: 0px 0px;
 }
 
 .emptyBox {
@@ -4416,5 +4430,12 @@ textarea.form-control {
 .loadingIcon {
   margin-top: 100px;
   width: 160px;
+}
+
+.btn-pagination {
+  width: 36px;
+  height: 36px;
+  margin: 0px 8px;
+  padding: 8px !important;
 }
 

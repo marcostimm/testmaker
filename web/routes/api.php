@@ -34,14 +34,15 @@ use Illuminate\Http\Request;
 //     });
 // });
 
+
 Route::middleware('throttle:240,1')->group( function () {
     Route::post('/auth/login', 'AuthController@login');
 });
 
-// Get exams list
-Route::get('/exams', 'ExamController@index');
-
 Route::group(['middleware' => ['auth:api']], function () {
+
+    // Get exams list
+    Route::get('/exams', 'ExamController@index');
 
     // Get the user information
     Route::get('/user', function(Request $request){
@@ -52,7 +53,12 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/questions', 'Question\QuestionController@index');
     // Get Types
     Route::get('/types', 'TypeController@index');
+
     // Get Categories
     Route::get('/categories', 'CategoryController@index');
+    // Post Categories
+    Route::post('/categories', 'CategoryController@create');
+
+    Route::delete('/categories/{id}', 'CategoryController@destroy');
 
 });

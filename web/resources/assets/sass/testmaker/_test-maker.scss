@@ -5,9 +5,20 @@
     font-size: 3em;
     min-height: 64px;
 }
-
+.icon-small {
+    font-size: 1em;
+    // min-height: 64px;
+}
  .emptyIcon {
      width: 300px;
+ }
+ .no-padding {
+     padding: 0px;
+ }
+ .small-btn {
+    width: 25px;
+    padding-top: 2px;
+    padding: 0px 0px;
  }
 
  .emptyBox {
@@ -36,4 +47,11 @@
 .loadingIcon {
     margin-top: 100px;
     width: 160px;
+}
+
+.btn-pagination {
+    width: 36px;
+    height: 36px;
+    margin: 0px 8px;
+    padding: 8px !important;
 }

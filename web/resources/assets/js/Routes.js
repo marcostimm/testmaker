@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import Dashboard from './screens/Dashboard';
 import NotFound  from './screens/NotFound';
 import Exams     from './screens/Exams';
+import Questions from './screens/Questions';
+import Subjects  from './screens/Subjects';
 import Empty     from './screens/Empty';
 import LoginForm from './screens/LoginForm';
 import requireAuth from './utils/requireAuth';
@@ -16,8 +18,8 @@ class Routes extends Component {
                 {/* <Route exact={true} path="/" component={Dashboard} /> */}
                 <Route path="/dashboard" component={requireAuth(Dashboard)} />
                 <Route path="/exams" component={requireAuth(Exams)} />
-                <Route path="/questions" component={requireAuth(Empty)} />
-                <Route path="/subjects" component={requireAuth(Empty)} />
+                <Route path="/questions" component={requireAuth(Questions)} />
+                <Route path="/subjects" component={requireAuth(Subjects)} />
                 <Route path="/formatting" component={requireAuth(Empty)} />
                 <Route path="/entities" component={requireAuth(Empty)} />
                 {/* 404 not found */}
