@@ -16,14 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::orderBy('id','desc')->paginate();
-        $cat = $categories->toArray();
-        unset($cat['last_page_url']);
-        unset($cat['next_page_url']);
-        unset($cat['prev_page_url']);
-        unset($cat['first_page_url']);
-        unset($cat['path']);
-
-        return response()->json($cat);
+        return response()->json($this->conformPagination($categories));
 
     }
 

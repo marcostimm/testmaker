@@ -2492,8 +2492,7 @@ textarea.form-control {
   background-color: #FFFCF5;
   border: 0 none;
   border-radius: 6px;
-  display: block;
-  margin-top: 10px;
+  display: block !important;
   padding: 0px;
   position: absolute;
   visibility: hidden;
@@ -2508,6 +2507,10 @@ textarea.form-control {
   opacity: 1;
   filter: alpha(opacity=100);
   visibility: visible;
+}
+
+.dropdown-menu.show {
+  margin-top: 40px !important;
 }
 
 .dropdown-menu .divider {
@@ -4379,6 +4382,12 @@ textarea.form-control {
 
 .bodypage {
   background-color: #F8F8F8 !important;
+}
+
+.show {
+  display: block !important;
+  visibility: visible;
+  opacity: 1;
 }
 
 .icon-big {

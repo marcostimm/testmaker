@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -33,7 +33,7 @@ if (localStorage.jwtToken) {
 render(
     <Provider store={store}>
         <BrowserRouter>
-            <div>
+            <Switch>
                 <Route path="/login" component={LoginForm} />
                 <div className="wrapper">
                     <Sidebar />
@@ -46,6 +46,6 @@ render(
                         <Footer />
                     </div>
                 </div>
-            </div>
+            </Switch>
         </BrowserRouter>
     </Provider>, document.getElementById('root'));

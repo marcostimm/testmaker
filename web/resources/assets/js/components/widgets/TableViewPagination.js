@@ -13,16 +13,15 @@ class TableViewPagination extends Component {
 
     setPage(page) {
         this.setState({current_page: page})
-
         if (typeof this.props.onChangePage === 'function') {
             this.props.onChangePage(page);
         }
     }
 
     render() {
-        const { data, numOfColumns } = this.props;
-        const { from, to, per_page, total, last_page } = data;
-        const { current_page } = this.state;
+        const { data, numOfColumns }                    = this.props;
+        const { from, to, per_page, total, last_page }  = data;
+        const { current_page }                          = this.state;
 
         if (data.total > data.per_page) {
 
@@ -35,9 +34,9 @@ class TableViewPagination extends Component {
                 <tr>
                     <td className="text-center" colSpan={numOfColumns}>
                         <a onClick={() => this.setPage(1)} className="btn btn-sm btn-success btn-icon btn-pagination"><i className="ti-angle-double-left"></i></a>
-                        <a onClick={() => this.setPage(current_page - 1)} className="btn btn-sm btn-success btn-icon btn-pagination"><i className="ti-angle-left"></i></a>
+                        <a onClick={() => this.setPage((current_page > 1) ? (current_page - 1) : 1)} className="btn btn-sm btn-success btn-icon btn-pagination"><i className="ti-angle-left"></i></a>
                         {pages}
-                        <a onClick={() => this.setPage(current_page + 1)} className="btn btn-sm btn-success btn-icon btn-pagination"><i className="ti-angle-right"></i></a>
+                        <a onClick={() => this.setPage((current_page < last_page) ? (current_page + 1) : last_page)} className="btn btn-sm btn-success btn-icon btn-pagination"><i className="ti-angle-right"></i></a>
                         <a onClick={() => this.setPage(last_page)} className="btn btn-sm btn-success btn-icon btn-pagination"><i className="ti-angle-double-right"></i></a>
                     </td>
                 </tr>
@@ -45,18 +44,12 @@ class TableViewPagination extends Component {
         } else {
             return (<tfoot>
                 <tr>
-                    <td colSpan={numOfColumns}>Footer sem paginação</td>
+                    <td colSpan={numOfColumns}></td>
                 </tr>
             </tfoot>);
         }
     }
 
 }
-
-// const propTypes = {
-//     data:           PropTypes.array.isRequired,
-//     numOfColumns:   PropTypes.number
-// }
-// TableViewPagination.propTypes = propTypes;
 
 export default TableViewPagination;

@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React            from 'react';
 
-import NavTop                   from '../components/NavTop';
-import Sidebar                  from '../components/Sidebar';
-import Footer                   from '../components/Footer';
+import NavTop           from '../components/NavTop';
+import Sidebar          from '../components/Sidebar';
+import Footer           from '../components/Footer';
 
 const Dashboard = () => {
 

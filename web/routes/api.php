@@ -49,16 +49,26 @@ Route::group(['middleware' => ['auth:api']], function () {
         return $request->user();
     });
 
-    // Get Categories
-    Route::get('/questions', 'Question\QuestionController@index');
     // Get Types
     Route::get('/types', 'TypeController@index');
 
     // Get Categories
     Route::get('/categories', 'CategoryController@index');
-    // Post Categories
+    // Post Category
     Route::post('/categories', 'CategoryController@create');
-
+    // Delete Category
     Route::delete('/categories/{id}', 'CategoryController@destroy');
+
+    // Get Entities
+    Route::get('/entities', 'EntityController@index');
+    // Post Category
+    Route::post('/entities', 'EntityController@create');
+    // Delete Category
+    Route::delete('/entities/{id}', 'EntityController@destroy');
+
+    // Get Questions
+    Route::get('/questions', 'Question\QuestionController@index');
+    // Get Questions Types
+    Route::get('/questions-type', 'Question\TypeController@index');
 
 });

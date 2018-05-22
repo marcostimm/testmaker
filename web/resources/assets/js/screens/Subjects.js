@@ -14,7 +14,7 @@ import { subjectsList,
 import { notify }                               from '../actions/alertActions';
 
 class Subjects extends Component {
-    
+
     constructor(props) {
         super(props);
 

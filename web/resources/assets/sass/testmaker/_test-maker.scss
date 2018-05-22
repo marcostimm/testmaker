@@ -1,6 +1,11 @@
 .bodypage{
     background-color: #F8F8F8 !important;
  }
+ .show {
+    display: block !important;
+    visibility: visible;
+    opacity: 1;
+}
  .icon-big {
     font-size: 3em;
     min-height: 64px;

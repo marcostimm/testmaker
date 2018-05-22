@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import EmptyData        from './EmptyData';
-import TableView        from '../components/widgets/TableView';
-import Loading          from '../components/widgets/Loading';
+import EmptyData                        from './EmptyData';
+import TableView                        from '../components/widgets/TableView';
+import Loading                          from '../components/widgets/Loading';
 import { examsList, examsListClear }    from '../actions/examsActions';
+import { questionsTypeList }            from '../actions/questionsActions';
+import Discursive                       from './Question/Discursive';
 
 class Questions extends Component {
     
@@ -13,9 +15,20 @@ class Questions extends Component {
         super(props);
 
         this.state = {
-          errors:       {},
-          isLoading:    true
+          errors:           {},
+          isLoading:        true,
+          questionsType:    [],
+          newQuestionType:  null
         };
+
+        this.loadQuestionsType()
+    }
+
+    loadQuestionsType() {
+        this.props.questionsTypeList().then(
+            (res) => {this.setState({questionsType: this.props.questions.questionsType.data}) },
+            (err) => this.setState({ errors: err.response, isLoading: false })
+        );
     }
 
     loadExams() {
@@ -26,8 +39,18 @@ class Questions extends Component {
         );
     }
 
+    newQuestion(typeSlug) {
+        console.log("Nova questão do tipo: ", typeSlug)
+
+        switch(typeSlug) {
+            case 'discursive':
+                this.setState({newQuestionType: <Discursive />});
+            break;
+        }
+    }
+
     componentDidMount() {
-       this.loadExams()
+        this.loadExams()
     }
 
     componentWillUnmount() {
@@ -38,6 +61,7 @@ class Questions extends Component {
         const { exams, isLoaded } = this.props.exams;
         const { isAuthenticated, user } = this.props.auth;
 
+        const { questionsType, newQuestionType } = this.state;
         const loading = <Loading />;
 
         const tableView = <TableView 
@@ -45,10 +69,25 @@ class Questions extends Component {
             header={["ID","Título","Data","Entidade","Ações"]}
             data={exams} />;
 
+
         return (
             <div className="container-fluid">
+                <div className="navbar">
+                    <ul className="nav navbar-nav navbar-right">
+                        <li className="dropdown">
+                            <button type="submit" className="btn btn-success btn-fill btn-wd" data-toggle="dropdown">Nova Questão</button>
+                            <ul className="dropdown-menu">
+                                { this.props.questionsType ? <li><a>Carregando...</a></li> : (questionsType.map((type, i) => <li key={i}><a onClick={() => this.newQuestion(type.slug)}>{type.name}</a></li>)) }
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                { newQuestionType }
+                
+
                 <div className="row">
-                    { isLoaded ? tableView : loading }
+                    { newQuestionType == null ? (isLoaded ? tableView : loading) : null }
                 </div>
             </div>
         )
@@ -63,4 +102,4 @@ const mapStateToProps=(state)=>{
     return state
 }
 
-export default connect(mapStateToProps, { examsList, examsListClear } )(Questions);
+export default connect(mapStateToProps, { examsList, examsListClear, questionsTypeList } )(Questions);

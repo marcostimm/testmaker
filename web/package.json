@@ -28,6 +28,7 @@
     "react-bs-notifier": "^5.0.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-tagsinput": "^3.19.0",
     "react-web-animation": "^0.7.0",
     "redux-thunk": "^2.2.0"
   }

@@ -48,15 +48,15 @@ class Sidebar extends Component {
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink to={'/formatting'}>
-                                <i className="ti-ruler-alt"></i>
-                                <p>Formatação</p>
+                            <NavLink to={'/entities'}>
+                                <i className="ti-briefcase"></i>
+                                <p>Entidades</p>
                             </NavLink>
                         </li>
                         <li>
-                        <NavLink to={'/entities'}>
-                                <i className="ti-briefcase"></i>
-                                <p>Entidades</p>
+                            <NavLink to={'/formatting'}>
+                                <i className="ti-ruler-alt"></i>
+                                <p>Formatação</p>
                             </NavLink>
                         </li>
                         <li>

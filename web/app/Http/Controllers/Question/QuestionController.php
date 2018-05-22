@@ -15,8 +15,8 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::all();
-        return response()->json($questions);
+        $quest = Question::orderBy('id','desc')->paginate();
+        return response()->json($this->conformPagination($quest));
 
     }
 
