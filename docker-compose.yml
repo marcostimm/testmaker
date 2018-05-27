@@ -12,7 +12,7 @@ services:
       - testmaker
     environment:
       DEBUG: 'true'
-      DB_HOST: 'mysql'
+      DB_HOST: 'mysqlTestMaker'
       DB_DATABASE: 'testmaker'
       DB_USERNAME: 'testmaker'
       DB_PASSWORD: 'testmakerdb'
