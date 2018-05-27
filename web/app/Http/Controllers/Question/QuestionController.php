@@ -25,9 +25,10 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = $request->only('type', 'subject', 'tags', 'notes', 'answer', 'reference', 'question');
+        return response()->json(['error' => false, 'success' => true, 'data' => $data]);
     }
 
     /**

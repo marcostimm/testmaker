@@ -71,7 +71,7 @@ class Dashboard extends Component {
 
     render() {
         return (
-        <div className="container-fluid">
+        <div className="container-fluid margin-top">
             <div className="row">
                 <div className="col-lg-3 col-sm-6">
                     <CardQuestions />

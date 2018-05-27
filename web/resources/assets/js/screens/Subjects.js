@@ -115,7 +115,7 @@ class Subjects extends Component {
             />;
 
         return (
-            <div className="container-fluid">
+            <div className="container-fluid margin-top">
 
                 <div className="col-md-12 no-padding">
                     <div className="card">

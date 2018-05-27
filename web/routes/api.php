@@ -70,5 +70,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/questions', 'Question\QuestionController@index');
     // Get Questions Types
     Route::get('/questions-type', 'Question\TypeController@index');
+    // Post Questions
+    Route::post('/questions', 'Question\QuestionController@create');
 
 });

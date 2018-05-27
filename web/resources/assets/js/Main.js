@@ -40,7 +40,7 @@ render(
                     <div className="main-panel">
                         <Notify />
                         <NavTop />
-                        <div className="content">
+                        <div className="content no-padding-top">
                             <Routes />
                         </div>
                         <Footer />

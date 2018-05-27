@@ -1,8 +1,10 @@
-import React, { Component }     from 'react';
-import { connect }              from 'react-redux';
-import { subjectsList }         from '../../actions/subjectsActions';
-import TagsInput                from 'react-tagsinput';
-import 'react-tagsinput/react-tagsinput.css';
+import React, { Component }             from 'react';
+import { connect }                      from 'react-redux';
+import { subjectsList }                 from '../../actions/subjectsActions';
+import { setQuestion }                  from '../../actions/questionsActions';
+import Validator                        from 'validator';
+import TagsInput                        from 'react-tagsinput';
+import                                  'react-tagsinput/react-tagsinput.css';
 
 class Discursive extends Component {
 
@@ -10,17 +12,33 @@ class Discursive extends Component {
         super(props);
 
         this.state = {
-          subjects:    [],
-          errors:      null,
-          tags:        [],
-
+            subjects:    [],
+            errors:      null,
+            tags:       [],
+            newQuestion: {
+                type:       'discursive',
+                subject:    null,
+                tags:       [],
+                notes:      "",
+                question:   "",
+                answer:     "",
+                reference:  ""
+            }
         };
 
-        this.handleTagChange       = this.handleTagChange.bind(this);
+        this.onSubmit               = this.onSubmit.bind(this);
+        this.handleChanges          = this.handleChanges.bind(this);
     }
 
-    handleTagChange(tags) {
-        this.setState({ tags: tags })
+    handleChanges(e){
+        const items = this.state.newQuestion;
+        if(Array.isArray(e)) {
+            items['tags'] = e
+        } else {
+            e.preventDefault();
+            items[e.target.name] = e.target.value
+        }
+        this.setState({ newQuestion: items })
     }
 
     loadSubjects() {
@@ -31,12 +49,37 @@ class Discursive extends Component {
         );
     }
 
+    isValid() {
+        let errors = {};
+        console.log(this.state.newQuestion)
+        return true;
+        // if (Validator.isNull(this.state.newQuestion)) {
+        //     errors.newEntity = 'Preencha a nova Entidade antes de salvar';
+
+        // }
+        // return {
+        //     errors,
+        //     isValid: isEmpty(errors)
+        // };
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+        if(this.isValid()) {
+            this.props.setQuestion(this.state.newQuestion).then(
+                (res) => {console.log('saved')},
+                (err) => {console.log('Error', err)}
+            );
+        }
+    }
+
     componentDidMount() {
         this.loadSubjects()
     }
 
     render() {
-        const { subjects, tags } = this.state;
+        const { subjects } = this.state;
+        const { tags, notes, question, answer, reference, subject } = this.state.newQuestion;
 
         return (
             <div className="col-md-12 no-padding">
@@ -45,25 +88,25 @@ class Discursive extends Component {
                         <h4 className="title">Adicionar Questão Discursiva</h4>
                     </div>
                     <div className="content">
-                        <form>
+                        <form onSubmit={this.onSubmit}>
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="form-group">
                                     <label>Assunto:</label>
-                                        <select className="form-control" id="sel1">
+                                        <select name="subject" onChange={this.handleChanges} className="form-control border-input" id="sel1">
                                             <option>Selecione um assunto...</option>
-                                            {subjects.map((subject, index) => <option key={index}>{subject.name}</option>)}
+                                            {subjects.map((subject, index) => <option key={index} value={subject.id}>{subject.name}</option>)}
                                         </select>
                                     </div>
 
                                     <div className="form-group">
-                                        <TagsInput value={tags} inputProps={{placeholder: 'Tags'}} onChange={this.handleTagChange} />
+                                        <TagsInput name="tags" id="tags" value={tags} inputProps={{placeholder: 'Tags'}} onChange={this.handleChanges} />
                                     </div>
                                 </div>
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label>Notas Internas (estas notas são para seu controle. Utilize como quiser.)</label>
-                                        <textarea rows="4" name="notes" id="notes" className="form-control border-input" ></textarea>
+                                        <textarea onChange={this.handleChanges} value={notes} rows="4" name="notes" id="notes" className="form-control border-input" ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -72,7 +115,7 @@ class Discursive extends Component {
                                 <div className="col-md-12">
                                     <div className="form-group">
                                         <label>Pergunta / Questão</label>
-                                        <textarea rows="4" name="question" id="question" className="form-control border-input" ></textarea>
+                                        <textarea onChange={this.handleChanges} value={question} rows="4" name="question" id="question" className="form-control border-input" ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -81,7 +124,7 @@ class Discursive extends Component {
                                 <div className="col-md-12">
                                     <div className="form-group">
                                         <label>Resposta</label>
-                                        <textarea rows="4" name="answer" id="answer" className="form-control border-input" ></textarea>
+                                        <textarea onChange={this.handleChanges} value={answer} rows="4" name="answer" id="answer" className="form-control border-input" ></textarea>
                                     </div>
                                 </div>
                             </div>                            
@@ -90,7 +133,7 @@ class Discursive extends Component {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                         <label>Referência (fonte)</label>
-                                        <input name="reference" id="reference" className="form-control border-input" />
+                                        <input onChange={this.handleChanges} value={reference} name="reference" id="reference" className="form-control border-input" />
                                     </div>
                                 </div>
                             </div>
@@ -114,4 +157,4 @@ const mapStateToProps=(state)=>{
     return state
 }
 
-export default connect(mapStateToProps, { subjectsList } )(Discursive);
+export default connect(mapStateToProps, { subjectsList, setQuestion } )(Discursive);

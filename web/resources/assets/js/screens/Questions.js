@@ -18,7 +18,7 @@ class Questions extends Component {
           errors:           {},
           isLoading:        true,
           questionsType:    [],
-          newQuestionType:  null
+          newQuestion:      <Discursive />
         };
 
         this.loadQuestionsType()
@@ -44,9 +44,13 @@ class Questions extends Component {
 
         switch(typeSlug) {
             case 'discursive':
-                this.setState({newQuestionType: <Discursive />});
+                this.setState({newQuestion: <Discursive />});
             break;
         }
+    }
+
+    emptyNewQuestion() {
+        this.setState({newQuestion: null});
     }
 
     componentDidMount() {
@@ -61,7 +65,7 @@ class Questions extends Component {
         const { exams, isLoaded } = this.props.exams;
         const { isAuthenticated, user } = this.props.auth;
 
-        const { questionsType, newQuestionType } = this.state;
+        const { questionsType, newQuestion } = this.state;
         const loading = <Loading />;
 
         const tableView = <TableView 
@@ -69,25 +73,23 @@ class Questions extends Component {
             header={["ID","Título","Data","Entidade","Ações"]}
             data={exams} />;
 
-
         return (
             <div className="container-fluid">
                 <div className="navbar">
                     <ul className="nav navbar-nav navbar-right">
+                        {newQuestion != null ? <button type="button" className="btn btn-warning btn-fill btn-wd" onClick={() => this.emptyNewQuestion()}>Cancelar</button> /*<button type="button" className="btn btn-danger btn-fill small-btn" onClick={() => this.emptyNewQuestion() } data-toggle="dropdown"><i className="ti-close"></i></button>*/ : (
                         <li className="dropdown">
-                            <button type="submit" className="btn btn-success btn-fill btn-wd" data-toggle="dropdown">Nova Questão</button>
+                            <button type="button" className="btn btn-success btn-fill btn-wd" data-toggle="dropdown">Nova Questão</button>
                             <ul className="dropdown-menu">
                                 { this.props.questionsType ? <li><a>Carregando...</a></li> : (questionsType.map((type, i) => <li key={i}><a onClick={() => this.newQuestion(type.slug)}>{type.name}</a></li>)) }
                             </ul>
                         </li>
+                        )}
                     </ul>
                 </div>
-
-                { newQuestionType }
-                
-
+                { newQuestion }
                 <div className="row">
-                    { newQuestionType == null ? (isLoaded ? tableView : loading) : null }
+                    { newQuestion == null ? (isLoaded ? tableView : loading) : null }
                 </div>
             </div>
         )

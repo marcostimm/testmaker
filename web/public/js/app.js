@@ -570,7 +570,7 @@ module.exports = invariant;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return SET_CURRENT_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return GET_EXAMS; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return GET_SUBJECTS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return SET_SUBJECT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return SET_SUBJECT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return DEL_SUBJECT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return GET_ENTITIES; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return SET_ENTITY; });
@@ -578,6 +578,7 @@ module.exports = invariant;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_ALERT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return REMOVE_ALERT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return GET_QUESTION_TYPE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return SET_QUESTION; });
 var SET_CURRENT_USER = 'SET_CURRENT_USER';
 var GET_EXAMS = 'GET_EXAMS';
 
@@ -593,6 +594,7 @@ var ADD_ALERT = 'ADD_ALERT';
 var REMOVE_ALERT = 'REMOVE_ALERT';
 
 var GET_QUESTION_TYPE = 'GET_QUESTION_TYPE';
+var SET_QUESTION = 'SET_QUESTION';
 
 /***/ }),
 /* 7 */
@@ -45631,7 +45633,7 @@ Object(__WEBPACK_IMPORTED_MODULE_1_react_dom__["render"])(__WEBPACK_IMPORTED_MOD
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_11__components_NavTop__["a" /* default */], null),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'div',
-                        { className: 'content' },
+                        { className: 'content no-padding-top' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_15__Routes__["a" /* default */], null)
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_13__components_Footer__["a" /* default */], null)
@@ -81198,7 +81200,7 @@ var Dashboard = function (_Component) {
         value: function render() {
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'container-fluid' },
+                { className: 'container-fluid margin-top' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'row' },
@@ -81910,7 +81912,7 @@ var Questions = function (_Component) {
             errors: {},
             isLoading: true,
             questionsType: [],
-            newQuestionType: null
+            newQuestion: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Question_Discursive__["a" /* default */], null)
         };
 
         _this.loadQuestionsType();
@@ -81947,9 +81949,14 @@ var Questions = function (_Component) {
 
             switch (typeSlug) {
                 case 'discursive':
-                    this.setState({ newQuestionType: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Question_Discursive__["a" /* default */], null) });
+                    this.setState({ newQuestion: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_8__Question_Discursive__["a" /* default */], null) });
                     break;
             }
+        }
+    }, {
+        key: 'emptyNewQuestion',
+        value: function emptyNewQuestion() {
+            this.setState({ newQuestion: null });
         }
     }, {
         key: 'componentDidMount',
@@ -81974,7 +81981,7 @@ var Questions = function (_Component) {
                 user = _props$auth.user;
             var _state = this.state,
                 questionsType = _state.questionsType,
-                newQuestionType = _state.newQuestionType;
+                newQuestion = _state.newQuestion;
 
             var loading = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__components_widgets_Loading__["a" /* default */], null);
 
@@ -81992,12 +81999,18 @@ var Questions = function (_Component) {
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                         'ul',
                         { className: 'nav navbar-nav navbar-right' },
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        newQuestion != null ? __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'button',
+                            { type: 'button', className: 'btn btn-warning btn-fill btn-wd', onClick: function onClick() {
+                                    return _this4.emptyNewQuestion();
+                                } },
+                            'Cancelar'
+                        ) /*<button type="button" className="btn btn-danger btn-fill small-btn" onClick={() => this.emptyNewQuestion() } data-toggle="dropdown"><i className="ti-close"></i></button>*/ : __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'li',
                             { className: 'dropdown' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'button',
-                                { type: 'submit', className: 'btn btn-success btn-fill btn-wd', 'data-toggle': 'dropdown' },
+                                { type: 'button', className: 'btn btn-success btn-fill btn-wd', 'data-toggle': 'dropdown' },
                                 'Nova Quest\xE3o'
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -82028,11 +82041,11 @@ var Questions = function (_Component) {
                         )
                     )
                 ),
-                newQuestionType,
+                newQuestion,
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'row' },
-                    newQuestionType == null ? isLoaded ? tableView : loading : null
+                    newQuestion == null ? isLoaded ? tableView : loading : null
                 )
             );
         }
@@ -82058,6 +82071,8 @@ var mapStateToProps = function mapStateToProps(state) {
 "use strict";
 /* unused harmony export getQuestionsType */
 /* harmony export (immutable) */ __webpack_exports__["a"] = questionsTypeList;
+/* unused harmony export setNewQuestion */
+/* harmony export (immutable) */ __webpack_exports__["b"] = setQuestion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jwt_decode__ = __webpack_require__(13);
@@ -82079,6 +82094,21 @@ function questionsTypeList() {
   return function (dispatch) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/questions-type').then(function (res) {
       dispatch(getQuestionsType(res.data, true));
+    });
+  };
+};
+
+function setNewQuestion(question) {
+  return {
+    type: __WEBPACK_IMPORTED_MODULE_2__types__["k" /* SET_QUESTION */],
+    question: question
+  };
+}
+
+function setQuestion(data) {
+  return function (dispatch) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/questions', data).then(function (res) {
+      dispatch(setNewQuestion(res.data));
     });
   };
 }
@@ -82253,7 +82283,7 @@ var Subjects = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'container-fluid' },
+                { className: 'container-fluid margin-top' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col-md-12 no-padding' },
@@ -82391,7 +82421,7 @@ function subjectsList() {
 
 function setNewSubject(subject) {
   return {
-    type: __WEBPACK_IMPORTED_MODULE_2__types__["k" /* SET_SUBJECT */],
+    type: __WEBPACK_IMPORTED_MODULE_2__types__["l" /* SET_SUBJECT */],
     subject: subject
   };
 }
@@ -82702,7 +82732,7 @@ var Entities = function (_Component) {
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
-                { className: 'container-fluid' },
+                { className: 'container-fluid margin-top' },
                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                     'div',
                     { className: 'col-md-12 no-padding' },
@@ -83420,10 +83450,13 @@ module.exports = function (css) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_redux__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_subjectsActions__ = __webpack_require__(451);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_tagsinput__ = __webpack_require__(462);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_react_tagsinput___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_react_tagsinput__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_tagsinput_react_tagsinput_css__ = __webpack_require__(463);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_react_tagsinput_react_tagsinput_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_react_tagsinput_react_tagsinput_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_questionsActions__ = __webpack_require__(448);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_validator__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_validator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_validator__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_tagsinput__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_tagsinput___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_tagsinput__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_tagsinput_react_tagsinput_css__ = __webpack_require__(463);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_tagsinput_react_tagsinput_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_tagsinput_react_tagsinput_css__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -83431,6 +83464,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -83449,18 +83484,34 @@ var Discursive = function (_Component) {
         _this.state = {
             subjects: [],
             errors: null,
-            tags: []
-
+            tags: [],
+            newQuestion: {
+                type: 'discursive',
+                subject: null,
+                tags: [],
+                notes: "",
+                question: "",
+                answer: "",
+                reference: ""
+            }
         };
 
-        _this.handleTagChange = _this.handleTagChange.bind(_this);
+        _this.onSubmit = _this.onSubmit.bind(_this);
+        _this.handleChanges = _this.handleChanges.bind(_this);
         return _this;
     }
 
     _createClass(Discursive, [{
-        key: 'handleTagChange',
-        value: function handleTagChange(tags) {
-            this.setState({ tags: tags });
+        key: 'handleChanges',
+        value: function handleChanges(e) {
+            var items = this.state.newQuestion;
+            if (Array.isArray(e)) {
+                items['tags'] = e;
+            } else {
+                e.preventDefault();
+                items[e.target.name] = e.target.value;
+            }
+            this.setState({ newQuestion: items });
         }
     }, {
         key: 'loadSubjects',
@@ -83475,6 +83526,33 @@ var Discursive = function (_Component) {
             });
         }
     }, {
+        key: 'isValid',
+        value: function isValid() {
+            var errors = {};
+            console.log(this.state.newQuestion);
+            return true;
+            // if (Validator.isNull(this.state.newQuestion)) {
+            //     errors.newEntity = 'Preencha a nova Entidade antes de salvar';
+
+            // }
+            // return {
+            //     errors,
+            //     isValid: isEmpty(errors)
+            // };
+        }
+    }, {
+        key: 'onSubmit',
+        value: function onSubmit(e) {
+            e.preventDefault();
+            if (this.isValid()) {
+                this.props.setQuestion(this.state.newQuestion).then(function (res) {
+                    console.log('saved');
+                }, function (err) {
+                    console.log('Error', err);
+                });
+            }
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.loadSubjects();
@@ -83482,9 +83560,14 @@ var Discursive = function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _state = this.state,
-                subjects = _state.subjects,
-                tags = _state.tags;
+            var subjects = this.state.subjects;
+            var _state$newQuestion = this.state.newQuestion,
+                tags = _state$newQuestion.tags,
+                notes = _state$newQuestion.notes,
+                question = _state$newQuestion.question,
+                answer = _state$newQuestion.answer,
+                reference = _state$newQuestion.reference,
+                subject = _state$newQuestion.subject;
 
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -83507,7 +83590,7 @@ var Discursive = function (_Component) {
                         { className: 'content' },
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'form',
-                            null,
+                            { onSubmit: this.onSubmit },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'div',
                                 { className: 'row' },
@@ -83524,7 +83607,7 @@ var Discursive = function (_Component) {
                                         ),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'select',
-                                            { className: 'form-control', id: 'sel1' },
+                                            { name: 'subject', onChange: this.handleChanges, className: 'form-control border-input', id: 'sel1' },
                                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                 'option',
                                                 null,
@@ -83533,7 +83616,7 @@ var Discursive = function (_Component) {
                                             subjects.map(function (subject, index) {
                                                 return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                     'option',
-                                                    { key: index },
+                                                    { key: index, value: subject.id },
                                                     subject.name
                                                 );
                                             })
@@ -83542,7 +83625,7 @@ var Discursive = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
                                         { className: 'form-group' },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3_react_tagsinput___default.a, { value: tags, inputProps: { placeholder: 'Tags' }, onChange: this.handleTagChange })
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_tagsinput___default.a, { name: 'tags', id: 'tags', value: tags, inputProps: { placeholder: 'Tags' }, onChange: this.handleChanges })
                                     )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -83556,7 +83639,7 @@ var Discursive = function (_Component) {
                                             null,
                                             'Notas Internas (estas notas s\xE3o para seu controle. Utilize como quiser.)'
                                         ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { rows: '4', name: 'notes', id: 'notes', className: 'form-control border-input' })
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { onChange: this.handleChanges, value: notes, rows: '4', name: 'notes', id: 'notes', className: 'form-control border-input' })
                                     )
                                 )
                             ),
@@ -83574,7 +83657,7 @@ var Discursive = function (_Component) {
                                             null,
                                             'Pergunta / Quest\xE3o'
                                         ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { rows: '4', name: 'question', id: 'question', className: 'form-control border-input' })
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { onChange: this.handleChanges, value: question, rows: '4', name: 'question', id: 'question', className: 'form-control border-input' })
                                     )
                                 )
                             ),
@@ -83592,7 +83675,7 @@ var Discursive = function (_Component) {
                                             null,
                                             'Resposta'
                                         ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { rows: '4', name: 'answer', id: 'answer', className: 'form-control border-input' })
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('textarea', { onChange: this.handleChanges, value: answer, rows: '4', name: 'answer', id: 'answer', className: 'form-control border-input' })
                                     )
                                 )
                             ),
@@ -83610,7 +83693,7 @@ var Discursive = function (_Component) {
                                             null,
                                             'Refer\xEAncia (fonte)'
                                         ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { name: 'reference', id: 'reference', className: 'form-control border-input' })
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { onChange: this.handleChanges, value: reference, name: 'reference', id: 'reference', className: 'form-control border-input' })
                                     )
                                 )
                             ),
@@ -83642,7 +83725,7 @@ var mapStateToProps = function mapStateToProps(state) {
     return state;
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, { subjectsList: __WEBPACK_IMPORTED_MODULE_2__actions_subjectsActions__["c" /* subjectsList */] })(Discursive));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, { subjectsList: __WEBPACK_IMPORTED_MODULE_2__actions_subjectsActions__["c" /* subjectsList */], setQuestion: __WEBPACK_IMPORTED_MODULE_3__actions_questionsActions__["b" /* setQuestion */] })(Discursive));
 
 /***/ }),
 /* 462 */
