@@ -6,4 +6,6 @@ jobs:
     working_directory: ~/testmaker
     steps:
       - checkout
-      - run: sudo composer self-update
+      - run: composer self-update
+      - run: cd web && composer install -n --prefer-dist
+      - run: php artisan migrate
