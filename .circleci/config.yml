@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/tmp
     docker:
-      - image: laravel:php-fpm
+      - image: marcostimm/laravel:php-fpm
     steps:
       - checkout
       - run: npm install
