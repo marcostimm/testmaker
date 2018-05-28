@@ -1,10 +1,9 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/tmp
     docker:
-      - image: marcostimm/laravel:php-fpm
+       - image: marcostimm/laravel:php-fpm
+    working_directory: ~/testmaker
     steps:
       - checkout
-      - run: npm install
-      - run: npm test
+      - run: sudo composer self-update
