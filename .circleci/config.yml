@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-       - image: marcostimm/laravel:php-fpm
+       - image: marcostimm/laravel:1.1
     working_directory: ~/testmaker
     steps:
       - checkout
