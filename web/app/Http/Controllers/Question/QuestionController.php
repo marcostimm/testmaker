@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Question;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Question\Types\{QuestionType, Discursive};
 use Illuminate\Http\Request;
+use App\Models\Type;
 use App\Models\Question;
+use Exception;
 
 class QuestionController extends Controller
 {
@@ -27,8 +30,42 @@ class QuestionController extends Controller
      */
     public function create(Request $request)
     {
-        $data = $request->only('type', 'subject', 'tags', 'notes', 'answer', 'reference', 'question');
-        return response()->json(['error' => false, 'success' => true, 'data' => $data]);
+        $data = $request->only(
+            'type_id', 
+            'subject', 
+            'category_id',
+            'tags', 
+            'internal_notes', 
+            'answer', 
+            'reference', 
+            'description',
+            'question'
+        );
+
+        // Verify if Type exists
+        $type = Type::find($data['type_id']);
+        if(!$type) {
+            throw new Exception(
+                "Question type does not exists"
+            );
+        }
+
+        // Normalize the name of a question and give a scope
+        $typeClassName = $this->normalizeQuestionType($type->slug);
+        $typeClass = 'App\Http\Controllers\Question\Types\\' . $typeClassName;
+
+        // Check if the class exists and implements the contract QuestionType
+        if(!class_exists($typeClass) || !(new $typeClass() instanceof QuestionType)) {
+            throw new Exception(
+                "Class $type does not exists or does not fulfill the required contract"
+            );
+        }
+
+        // Instantiate de Class type and set a new Question
+        $question = new $typeClass();
+        $response = $question->set($data);
+
+        return $response;
     }
 
     /**
@@ -62,5 +99,19 @@ class QuestionController extends Controller
     public function destroy($id) : bool
     {
         //
+    }
+
+    /**
+     * Method normalizeQuestionType
+     *
+     * @param string $slug slug of a question type
+     *
+     * @return string question type name
+     * @throws exception 
+     * @access private
+     */
+    private function normalizeQuestionType(string $slug) : string
+    {
+        return str_replace(' ','',ucfirst(str_replace("-"," ", $slug)));
     }
 }

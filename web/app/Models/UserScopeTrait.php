@@ -30,6 +30,7 @@ trait UserScopeTrait {
     */
     public function apply( Builder $builder, Model $model )
     {
+        dd(1);
         $user = Auth::User();
         $builder->where('user_id', '=', $user->id);
     }

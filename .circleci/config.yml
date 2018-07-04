@@ -11,4 +11,4 @@ jobs:
       - run: php -r "unlink('composer-setup.php');"
       - run: php composer.phar self-update
       - run: mv composer.phar /usr/local/bin/composer
-      - run: cd web && composer install -n --prefer-dist && php artisan migrate --force
+      - run: cd web && composer install -n --prefer-dist

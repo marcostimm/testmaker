@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Questions extends Migration
+class Tags extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class Questions extends Migration
      */
     public function up()
     {
-        Schema::create('questions', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('question');
-            $table->text('description')->nullable();
-            $table->text('internal_notes')->nullable();
-            $table->string('reference');
-            $table->integer('type_id');
-            $table->integer('category_id');
+            $table->integer('question_id');
+            $table->text('tags');
             $table->timestamps();
         });
+        DB::statement("ALTER TABLE tags ADD FULLTEXT fulltext_tags(tags)");
     }
 
     /**
@@ -32,6 +29,6 @@ class Questions extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('questions');
+        Schema::drop('tags');
     }
 }

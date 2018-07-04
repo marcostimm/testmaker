@@ -25,6 +25,9 @@ RUN curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-m
 # Install Composer
 RUN curl --silent --show-error https://getcomposer.org/installer | php
 
+# Laravel
+RUN composer global require "laravel/installer"
+
 # Download all dependencices
 WORKDIR /var/www/html/web/app
 RUN php composer.phar install

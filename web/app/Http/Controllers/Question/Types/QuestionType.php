@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PHP Version 7
  * IQuestions.php
@@ -9,6 +10,12 @@
  * @license  Copyright (C)
  * @link     https://marcos.im
  */
+
+namespace App\Http\Controllers\Question\Types;
+
+use App\Models\Question;
+use Illuminate\Http\JsonResponse;
+
 
  /**
   * IQuestions Interface
@@ -21,10 +28,10 @@
   * @license  Copyright (C)
   * @link     https://marcos.im
   */  
-interface IQuestions
+interface QuestionType
 {
     /**
-     * Method getQuestions
+     * Method get
      *
      * @param int $question_id Should return a object question
      *
@@ -32,18 +39,18 @@ interface IQuestions
      * @throws exception 
      * @access public
      */
-    function getQuestion(int $question_id) : Question;
+    function get(int $question_id) : Question;
 
     /**
-     * Method setQuestion
+     * Method set
      *
-     * @param Question $question Set a new question
+     * @param array $data data of a new question
      *
      * @return bool return description
      * @throws exception 
      * @access public
      */
-    public function setQuestion(Question $question) : bool;
+    public function set(array $data) : JsonResponse;
 
 
 }

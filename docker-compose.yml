@@ -5,7 +5,7 @@ services:
   php:
     build:
       context: ./docker/php7-fpm
-    image: laravel:php-fpm
+    image: marcostimm/laravel:1.1
     entrypoint:
       - php-fpm
     networks:
