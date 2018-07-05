@@ -23358,10 +23358,10 @@ function examsList(data) {
 "use strict";
 /* unused harmony export getQuestions */
 /* unused harmony export getQuestionsType */
+/* unused harmony export setNewQuestion */
 /* harmony export (immutable) */ __webpack_exports__["a"] = questionList;
 /* harmony export (immutable) */ __webpack_exports__["b"] = questionsListClear;
 /* harmony export (immutable) */ __webpack_exports__["c"] = questionsTypeList;
-/* unused harmony export setNewQuestion */
 /* harmony export (immutable) */ __webpack_exports__["d"] = setQuestion;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
@@ -23388,6 +23388,14 @@ function getQuestionsType(questionsType, isLoaded) {
   };
 }
 
+function setNewQuestion(question, success) {
+  return {
+    type: __WEBPACK_IMPORTED_MODULE_2__types__["l" /* SET_QUESTION */],
+    question: question,
+    success: success
+  };
+}
+
 function questionList(data) {
   return function (dispatch) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.get('/api/questions').then(function (res) {
@@ -23410,17 +23418,11 @@ function questionsTypeList() {
   };
 };
 
-function setNewQuestion(question) {
-  return {
-    type: __WEBPACK_IMPORTED_MODULE_2__types__["l" /* SET_QUESTION */],
-    question: question
-  };
-}
-
 function setQuestion(data) {
   return function (dispatch) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/api/questions', data).then(function (res) {
-      dispatch(setNewQuestion(res.data));
+      dispatch(setNewQuestion(res.data.data, res.data.success));
+      return res.data;
     });
   };
 }
@@ -69420,7 +69422,9 @@ var initialState = {
 var initialState = {
   questionsType: [],
   questions: {},
-  isLoaded: false
+  newQuestion: {},
+  isLoaded: false,
+  success: false
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (function () {
@@ -69436,6 +69440,11 @@ var initialState = {
       return {
         isLoaded: action.isLoaded,
         questions: action.questions
+      };
+    case __WEBPACK_IMPORTED_MODULE_0__actions_types__["l" /* SET_QUESTION */]:
+      return {
+        success: action.success,
+        newQuestion: action.question
       };
     default:
       return state;
@@ -82166,6 +82175,7 @@ var Questions = function (_Component) {
         };
 
         _this.onChangePage = _this.onChangePage.bind(_this);
+        _this.closeNewQuestion = _this.closeNewQuestion.bind(_this);
 
         _this.loadQuestionsType();
         return _this;
@@ -82214,14 +82224,19 @@ var Questions = function (_Component) {
             }, function (err) {
                 return _this4.setState({ errors: err.response, isLoading: false });
             });
-            console.log('change page to ' + page);
+        }
+    }, {
+        key: 'closeNewQuestion',
+        value: function closeNewQuestion() {
+            this.setState({ newQuestion: null });
+            this.loadQuestions();
         }
     }, {
         key: 'newQuestion',
         value: function newQuestion(typeSlug) {
             switch (typeSlug) {
                 case 'discursive':
-                    this.setState({ newQuestion: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Question_Discursive__["a" /* default */], null) });
+                    this.setState({ newQuestion: __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_7__Question_Discursive__["a" /* default */], { closeNewQuestion: this.closeNewQuestion }) });
                     break;
             }
         }
@@ -82345,10 +82360,15 @@ var mapStateToProps = function mapStateToProps(state) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_questionsActions__ = __webpack_require__(154);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_validator__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_validator___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_validator__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_tagsinput__ = __webpack_require__(449);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_tagsinput___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_tagsinput__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_tagsinput_react_tagsinput_css__ = __webpack_require__(450);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_tagsinput_react_tagsinput_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_tagsinput_react_tagsinput_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_isEmpty__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_lodash_isEmpty___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_lodash_isEmpty__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_tagsinput__ = __webpack_require__(449);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_tagsinput___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_tagsinput__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__actions_alertActions__ = __webpack_require__(78);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_tagsinput_react_tagsinput_css__ = __webpack_require__(450);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_react_tagsinput_react_tagsinput_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_react_tagsinput_react_tagsinput_css__);
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -82356,6 +82376,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
 
 
 
@@ -82378,18 +82400,19 @@ var Discursive = function (_Component) {
             errors: null,
             tags: [],
             newQuestion: {
-                type: 'discursive',
-                subject: null,
+                type_id: 2,
+                category_id: null,
                 tags: [],
-                notes: "",
+                internal_notes: "",
                 question: "",
                 answer: "",
-                reference: ""
+                reference: "",
+                description: ""
             }
         };
-
         _this.onSubmit = _this.onSubmit.bind(_this);
         _this.handleChanges = _this.handleChanges.bind(_this);
+        _this.closeNewQuestion = _this.closeNewQuestion.bind(_this);
         return _this;
     }
 
@@ -82418,30 +82441,50 @@ var Discursive = function (_Component) {
             });
         }
     }, {
+        key: 'closeNewQuestion',
+        value: function closeNewQuestion() {
+            if (typeof this.props.closeNewQuestion === 'function') {
+                this.props.closeNewQuestion();
+            }
+        }
+    }, {
         key: 'isValid',
         value: function isValid() {
             var errors = {};
-            console.log(this.state.newQuestion);
-            return true;
-            // if (Validator.isNull(this.state.newQuestion)) {
-            //     errors.newEntity = 'Preencha a nova Entidade antes de salvar';
 
-            // }
-            // return {
-            //     errors,
-            //     isValid: isEmpty(errors)
-            // };
+            if (__WEBPACK_IMPORTED_MODULE_4_validator___default.a.isNull(this.state.newQuestion.answer)) {
+                errors.newEntity = 'Preencha a resposta para a questão';
+            }
+            if (__WEBPACK_IMPORTED_MODULE_4_validator___default.a.isNull(this.state.newQuestion.question)) {
+                errors.newEntity = 'Preencha a questão';
+            }
+            if (_typeof(null) === this.state.newQuestion.category_id) {
+                errors.newEntity = 'Escolha uma categoria para a questão';
+            }
+            return {
+                errors: errors,
+                isValid: __WEBPACK_IMPORTED_MODULE_5_lodash_isEmpty___default()(errors)
+            };
         }
     }, {
         key: 'onSubmit',
         value: function onSubmit(e) {
+            var _this3 = this;
+
             e.preventDefault();
-            if (this.isValid()) {
+            if (this.isValid().isValid) {
                 this.props.setQuestion(this.state.newQuestion).then(function (res) {
-                    console.log('saved');
+                    if (res.success) {
+                        _this3.props.notify('success', 'Sucesso', 'Nova questão adicionada com sucesso');
+                        _this3.props.closeNewQuestion();
+                    } else {
+                        _this3.props.notify('danger', 'Erro', 'Erro ao salvar nova questão');
+                    }
                 }, function (err) {
-                    console.log('Error', err);
+                    _this3.props.notify('danger', 'Erro', 'Erro ao salvar nova questão');
                 });
+            } else {
+                this.props.notify('warning', 'Erro', 'Preencha os campos obrigatórios antes de salvar');
             }
         }
     }, {
@@ -82499,7 +82542,7 @@ var Discursive = function (_Component) {
                                         ),
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'select',
-                                            { name: 'subject', onChange: this.handleChanges, className: 'form-control border-input', id: 'sel1' },
+                                            { name: 'category_id', onChange: this.handleChanges, className: 'form-control border-input', id: 'sel1' },
                                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                 'option',
                                                 null,
@@ -82517,7 +82560,7 @@ var Discursive = function (_Component) {
                                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                         'div',
                                         { className: 'form-group' },
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5_react_tagsinput___default.a, { name: 'tags', id: 'tags', value: tags, inputProps: { placeholder: 'Tags' }, onChange: this.handleChanges })
+                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_6_react_tagsinput___default.a, { name: 'tags', id: 'tags', value: tags, inputProps: { placeholder: 'Tags' }, onChange: this.handleChanges })
                                     )
                                 ),
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -82617,7 +82660,10 @@ var mapStateToProps = function mapStateToProps(state) {
     return state;
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, { subjectsList: __WEBPACK_IMPORTED_MODULE_2__actions_subjectsActions__["c" /* subjectsList */], setQuestion: __WEBPACK_IMPORTED_MODULE_3__actions_questionsActions__["d" /* setQuestion */] })(Discursive));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_1_react_redux__["b" /* connect */])(mapStateToProps, {
+    subjectsList: __WEBPACK_IMPORTED_MODULE_2__actions_subjectsActions__["c" /* subjectsList */],
+    setQuestion: __WEBPACK_IMPORTED_MODULE_3__actions_questionsActions__["d" /* setQuestion */],
+    notify: __WEBPACK_IMPORTED_MODULE_7__actions_alertActions__["b" /* notify */] })(Discursive));
 
 /***/ }),
 /* 449 */

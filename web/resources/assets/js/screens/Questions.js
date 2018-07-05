@@ -23,6 +23,7 @@ class Questions extends Component {
         };
 
         this.onChangePage   = this.onChangePage.bind(this);
+        this.closeNewQuestion = this.closeNewQuestion.bind(this);
 
         this.loadQuestionsType()
     }
@@ -55,13 +56,17 @@ class Questions extends Component {
             (res) => this.setState({ isLoading: !this.props.isLoaded}),
             (err) => this.setState({ errors: err.response, isLoading: false })
         );
-        console.log('change page to ' + page)
+    }
+
+    closeNewQuestion() {
+        this.setState({newQuestion: null});
+        this.loadQuestions()
     }
 
     newQuestion(typeSlug) {
         switch(typeSlug) {
             case 'discursive':
-                this.setState({newQuestion: <Discursive />});
+                this.setState({newQuestion: <Discursive closeNewQuestion={this.closeNewQuestion} />});
             break;
         }
     }

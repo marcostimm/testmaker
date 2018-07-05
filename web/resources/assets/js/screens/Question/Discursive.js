@@ -3,7 +3,9 @@ import { connect }                      from 'react-redux';
 import { subjectsList }                 from '../../actions/subjectsActions';
 import { setQuestion }                  from '../../actions/questionsActions';
 import Validator                        from 'validator';
+import isEmpty                          from 'lodash/isEmpty';
 import TagsInput                        from 'react-tagsinput';
+import { notify }                       from '../../actions/alertActions';
 import                                  'react-tagsinput/react-tagsinput.css';
 
 class Discursive extends Component {
@@ -16,18 +18,19 @@ class Discursive extends Component {
             errors:      null,
             tags:       [],
             newQuestion: {
-                type:       'discursive',
-                subject:    null,
-                tags:       [],
-                notes:      "",
-                question:   "",
-                answer:     "",
-                reference:  ""
+                type_id:            2,
+                category_id:        null,
+                tags:               [],
+                internal_notes:     "",
+                question:           "",
+                answer:             "",
+                reference:          "",
+                description:        ""
             }
         };
-
         this.onSubmit               = this.onSubmit.bind(this);
         this.handleChanges          = this.handleChanges.bind(this);
+        this.closeNewQuestion       = this.closeNewQuestion.bind(this);
     }
 
     handleChanges(e){
@@ -49,27 +52,46 @@ class Discursive extends Component {
         );
     }
 
+    closeNewQuestion() {
+        if (typeof this.props.closeNewQuestion === 'function') {
+            this.props.closeNewQuestion();
+        }
+    }
+
     isValid() {
         let errors = {};
-        console.log(this.state.newQuestion)
-        return true;
-        // if (Validator.isNull(this.state.newQuestion)) {
-        //     errors.newEntity = 'Preencha a nova Entidade antes de salvar';
 
-        // }
-        // return {
-        //     errors,
-        //     isValid: isEmpty(errors)
-        // };
+        if (Validator.isNull(this.state.newQuestion.answer)) {
+            errors.newEntity = 'Preencha a resposta para a questão';
+        }
+        if (Validator.isNull(this.state.newQuestion.question)) {
+            errors.newEntity = 'Preencha a questão';
+        }
+        if (typeof null ===  this.state.newQuestion.category_id) {
+            errors.newEntity = 'Escolha uma categoria para a questão';
+        }
+        return {
+            errors,
+            isValid: isEmpty(errors)
+        };
     }
 
     onSubmit(e) {
         e.preventDefault();
-        if(this.isValid()) {
+        if(this.isValid().isValid) {
             this.props.setQuestion(this.state.newQuestion).then(
-                (res) => {console.log('saved')},
-                (err) => {console.log('Error', err)}
+                (res) => {
+                    if(res.success) {
+                        this.props.notify('success','Sucesso','Nova questão adicionada com sucesso'); 
+                        this.props.closeNewQuestion();
+                    } else {
+                        this.props.notify('danger','Erro','Erro ao salvar nova questão')
+                    }
+                },
+                (err) => {this.props.notify('danger','Erro','Erro ao salvar nova questão')}
             );
+        } else {
+            this.props.notify('warning','Erro','Preencha os campos obrigatórios antes de salvar'); 
         }
     }
 
@@ -93,7 +115,7 @@ class Discursive extends Component {
                                 <div className="col-md-6">
                                     <div className="form-group">
                                     <label>Assunto:</label>
-                                        <select name="subject" onChange={this.handleChanges} className="form-control border-input" id="sel1">
+                                        <select name="category_id" onChange={this.handleChanges} className="form-control border-input" id="sel1">
                                             <option>Selecione um assunto...</option>
                                             {subjects.map((subject, index) => <option key={index} value={subject.id}>{subject.name}</option>)}
                                         </select>
@@ -157,4 +179,7 @@ const mapStateToProps=(state)=>{
     return state
 }
 
-export default connect(mapStateToProps, { subjectsList, setQuestion } )(Discursive);
+export default connect(mapStateToProps, { 
+    subjectsList, 
+    setQuestion,
+    notify } )(Discursive);

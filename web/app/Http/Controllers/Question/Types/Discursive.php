@@ -31,6 +31,7 @@ class Discursive extends Controller implements QuestionType
         DB::transaction(function () use ($newQuestion, $data) {
             if($newQuestion->save()) {
 
+                $data['tags'] = implode(', ',$data['tags']);
                 $tags = new Tags($data);
                 $newQuestion->tags()->save($tags);
 
@@ -45,8 +46,13 @@ class Discursive extends Controller implements QuestionType
             }
         });
 
-        dd($newQuestion->id);
-        return response()->json(true);
+        return response()->json(
+            [
+            'errors'    => null,
+            'success'   => true,
+            'data'      => $newQuestion
+            ]
+        );
     }
 
     /**

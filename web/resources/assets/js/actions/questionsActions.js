@@ -18,6 +18,14 @@ export function getQuestionsType(questionsType, isLoaded) {
   };
 }
 
+export function setNewQuestion(question, success) {
+  return {
+    type: SET_QUESTION,
+    question,
+    success
+  }
+}
+
 export function questionList(data) {
   return dispatch => {
     return axios.get('/api/questions').then(res => {
@@ -40,17 +48,11 @@ export function questionsTypeList() {
   }
 };
 
-export function setNewQuestion(question) {
-  return {
-    type: SET_QUESTION,
-    question
-  }
-}
-
 export function setQuestion(data) {
   return dispatch => {
     return axios.post('/api/questions', data).then(res => {
-      dispatch(setNewQuestion(res.data));
+      dispatch(setNewQuestion(res.data.data, res.data.success));
+      return res.data
     });
   }
 }
