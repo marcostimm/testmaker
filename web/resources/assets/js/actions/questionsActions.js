@@ -1,6 +1,14 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { GET_QUESTION_TYPE, SET_QUESTION } from './types';
+import { GET_QUESTION_TYPE, SET_QUESTION, GET_QUESTIONS } from './types';
+
+export function getQuestions(questions, isLoaded) {
+  return {
+    type: GET_QUESTIONS,
+    questions,
+    isLoaded
+  };
+}
 
 export function getQuestionsType(questionsType, isLoaded) {
   return {
@@ -8,6 +16,20 @@ export function getQuestionsType(questionsType, isLoaded) {
     questionsType,
     isLoaded
   };
+}
+
+export function questionList(data) {
+  return dispatch => {
+    return axios.get('/api/questions').then(res => {
+      dispatch(getQuestions(res.data, true));
+    });
+  }
+}
+
+export function questionsListClear() {
+  return dispatch => {
+    dispatch(getQuestions({}, false));
+  }
 }
 
 export function questionsTypeList() {

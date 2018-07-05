@@ -12,5 +12,6 @@ export const DEL_ENTITY         = 'DEL_ENTITY';
 export const ADD_ALERT          = 'ADD_ALERT';
 export const REMOVE_ALERT       = 'REMOVE_ALERT';
 
+export const GET_QUESTIONS      = 'GET_QUESTIONS';
 export const GET_QUESTION_TYPE  = 'GET_QUESTION_TYPE';
 export const SET_QUESTION       = 'SET_QUESTION';

@@ -109,7 +109,7 @@ class Entities extends Component {
         const tableView = <TableView 
             title="Entidades" 
             header={['#','Título','Slug']}
-            body={['id', 'name', 'slug']}
+            columns= {['id', 'name', 'slug']}
             content={entities}
             actions={['delete']}
             onDelete={this.onDelete}

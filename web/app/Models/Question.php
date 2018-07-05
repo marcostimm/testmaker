@@ -50,7 +50,7 @@ class Question extends Model
      */
     public function type()
     {
-        return $this->hasOne('App\Models\Type');
+        return $this->belongsTo('App\Models\Type');
     }
     /**
      * A question has one category
@@ -59,7 +59,7 @@ class Question extends Model
      */
     public function category()
     {
-        return $this->hasOne('App\Models\Category');
+        return $this->belongsTo('App\Models\Category');
     }
 
     public function save(array $options = array())

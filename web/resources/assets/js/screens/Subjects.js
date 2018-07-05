@@ -95,7 +95,6 @@ class Subjects extends Component {
             (res) => this.setState({ isLoading: !this.props.isLoaded}),
             (err) => this.setState({ errors: err.response, isLoading: false })
         );
-        console.log('change page to ' + page)
     }
 
     render() {
@@ -107,7 +106,7 @@ class Subjects extends Component {
         const tableView = <TableView 
             title="Assuntos" 
             header={['#','Título','Slug']}
-            body={['id', 'name', 'slug']}
+            columns= {['id', 'name', 'slug']}
             content={subjects}
             actions={['delete']}
             onDelete={this.onDelete}

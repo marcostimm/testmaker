@@ -18,7 +18,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $quest = Question::orderBy('id','desc')->paginate();
+        $quest = Question::with(['tags', 'answer', 'type', 'category'])->orderBy('id','desc')->paginate();
         return response()->json($this->conformPagination($quest));
 
     }

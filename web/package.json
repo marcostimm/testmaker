@@ -26,10 +26,13 @@
   "dependencies": {
     "prop-types": "^15.6.1",
     "react-bs-notifier": "^5.0.0",
+    "react-redux": "^5.0.7",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-spring": "^5.3.18",
     "react-tagsinput": "^3.19.0",
     "react-web-animation": "^0.7.0",
+    "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
   }
 }

@@ -24,7 +24,7 @@ class TableView extends Component {
     }
 
     render() {
-        const { title, subtitle, header, body, content, autoLink, actions } = this.props;
+        const { title, subtitle, header, columns, content, autoLink, actions } = this.props;
         const numOfColumns = header.length + (actions? 1 : 0)
 
         // Empty Data
@@ -42,28 +42,23 @@ class TableView extends Component {
                     </div>
                     <div className="content table-responsive table-full-width">
                         <table className="table table-striped">
+
                             <thead>
                                 <tr>
                                     { header.map((title, i) => <th key={i}>{title}</th>) }
                                     { ( actions ) ? <th>Ações</th> : null}
                                 </tr>
                             </thead>
+
                             <tbody>
-                                {Object.keys(content.data).map((line, j) => 
+                                { content.data.map((line, j) =>
                                     <tr key={j}>
-                                        { Object.keys(content.data[line]).map((column, k) => {
-                                            if( typeof body !== 'undefined' && body.length > 0 ) {
-                                            return (body.indexOf(column) >= 0) ? (
-                                                (k <= 2 && autoLink) ?
-                                                <td key={k}><NavLink to={"/subjects/" + (content.data[line]).id}>{content.data[line][column]}</NavLink></td> :
-                                                <td key={k}>{content.data[line][column]}</td>
-                                                ) : null
-                                            } else {
-                                                return <td key={k}>{content.data[line][column]}</td>
-                                            }
+                                        { columns.map((column, m) => {
+                                            let col = (typeof column === 'object') ? Object.keys(column)[0] : column
+                                            return <td key={m}>{getElem(line, column)}</td>;
                                         })}
                                         { ( actions ) ? (
-                                            (actions.indexOf('delete') >= 0) ? <td><button onClick={() => this.onDelete((content.data[line]).id) } className="btn btn-danger btn-fill small-btn"><i className="ti-close"></i></button></td> : null
+                                            (actions.indexOf('delete') >= 0) ? <td><button onClick={() => this.onDelete(line.id) } className="btn btn-danger btn-fill small-btn"><i className="ti-close"></i></button></td> : null
                                         ) : null }
                                     </tr>
                                 )}
@@ -79,3 +74,14 @@ class TableView extends Component {
 }
 
 export default TableView;
+
+
+
+function getElem(line, column) {
+    if (typeof column === 'object') {
+        var colName = Object.keys(column)[0];
+        var colSubitem = Object.values(column)[0];
+        return line[colName][colSubitem];
+    }
+    return line[column];
+}

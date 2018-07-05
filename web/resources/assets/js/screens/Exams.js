@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import EmptyData        from './EmptyData';
-import TableView        from '../components/widgets/TableView';
-import Loading          from '../components/widgets/Loading';
+import EmptyData                        from './EmptyData';
+import TableView                        from '../components/widgets/TableView';
+import Loading                          from '../components/widgets/Loading';
 import { examsList, examsListClear }    from '../actions/examsActions';
 
 class Exams extends Component {

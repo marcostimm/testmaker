@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import EmptyData                        from './EmptyData';
-import TableView                        from '../components/widgets/TableView';
-import Loading                          from '../components/widgets/Loading';
-import { examsList, examsListClear }    from '../actions/examsActions';
-import { questionsTypeList }            from '../actions/questionsActions';
-import Discursive                       from './Question/Discursive';
+import EmptyData                            from './EmptyData';
+import TableView                            from '../components/widgets/TableView';
+import Loading                              from '../components/widgets/Loading';
+import { questionList, 
+         questionsListClear, 
+         questionsTypeList }                from '../actions/questionsActions';
+import Discursive                           from './Question/Discursive';
 
 class Questions extends Component {
     
@@ -18,10 +19,20 @@ class Questions extends Component {
           errors:           {},
           isLoading:        true,
           questionsType:    [],
-          newQuestion:      <Discursive />
+          newQuestion:      null
         };
 
+        this.onChangePage   = this.onChangePage.bind(this);
+
         this.loadQuestionsType()
+    }
+
+    componentWillUnmount() {
+        this.props.questionsListClear()
+    }
+
+    componentDidMount() {
+        this.loadQuestions()
     }
 
     loadQuestionsType() {
@@ -31,17 +42,23 @@ class Questions extends Component {
         );
     }
 
-    loadExams() {
+    loadQuestions() {
         this.setState({ errors: {}, isLoading: true });
-        this.props.examsList().then(
-            (res) => {this.setState({examsData: this.props.exams, isLoading: !this.props.isLoaded});  },
+        this.props.questionList().then(
+            (res) => {this.setState({isLoading: !this.props.isLoaded});  },
             (err) => this.setState({ errors: err.response, isLoading: false })
         );
     }
 
-    newQuestion(typeSlug) {
-        console.log("Nova questão do tipo: ", typeSlug)
+    onChangePage(page) {
+        this.props.subjectsList(page).then(
+            (res) => this.setState({ isLoading: !this.props.isLoaded}),
+            (err) => this.setState({ errors: err.response, isLoading: false })
+        );
+        console.log('change page to ' + page)
+    }
 
+    newQuestion(typeSlug) {
         switch(typeSlug) {
             case 'discursive':
                 this.setState({newQuestion: <Discursive />});
@@ -53,25 +70,21 @@ class Questions extends Component {
         this.setState({newQuestion: null});
     }
 
-    componentDidMount() {
-        this.loadExams()
-    }
-
-    componentWillUnmount() {
-        this.props.examsListClear()
-    }
-
     render() {
-        const { exams, isLoaded } = this.props.exams;
-        const { isAuthenticated, user } = this.props.auth;
+        const { questions, isLoaded }       = this.props.questions;
+        const { isAuthenticated, user }     = this.props.auth;
 
         const { questionsType, newQuestion } = this.state;
         const loading = <Loading />;
 
         const tableView = <TableView 
             title="Questões" 
-            header={["ID","Título","Data","Entidade","Ações"]}
-            data={exams} />;
+            header={['#', 'Tipo', 'Categoria', 'Título', 'Referência']}
+            columns= {['id', {'type': 'name'}, {'category': 'name'}, 'question', 'reference']}
+            actions={['delete']}
+            content={questions}
+            onChangePage={this.onChangePage}
+            />;
 
         return (
             <div className="container-fluid">
@@ -89,7 +102,7 @@ class Questions extends Component {
                 </div>
                 { newQuestion }
                 <div className="row">
-                    { newQuestion == null ? (isLoaded ? tableView : loading) : null }
+                    { newQuestion == null ? ( isLoaded ? tableView : loading ) : null }
                 </div>
             </div>
         )
@@ -97,11 +110,14 @@ class Questions extends Component {
 }
 
 Questions.propTypes = {
-    examsList: PropTypes.func.isRequired
+    questionList: PropTypes.func.isRequired
 }
 
 const mapStateToProps=(state)=>{
     return state
 }
 
-export default connect(mapStateToProps, { examsList, examsListClear, questionsTypeList } )(Questions);
+export default connect(mapStateToProps, { 
+    questionList, 
+    questionsListClear, 
+    questionsTypeList } )(Questions);
