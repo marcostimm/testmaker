@@ -30,16 +30,6 @@ use Illuminate\Http\JsonResponse;
   */  
 interface QuestionType
 {
-    /**
-     * Method get
-     *
-     * @param int $question_id Should return a object question
-     *
-     * @return Question return 
-     * @throws exception 
-     * @access public
-     */
-    function get(int $question_id) : Question;
 
     /**
      * Method set

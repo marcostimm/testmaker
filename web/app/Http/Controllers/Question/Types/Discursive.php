@@ -55,19 +55,4 @@ class Discursive extends Controller implements QuestionType
         );
     }
 
-    /**
-     * Method get
-     *
-     * @param int $question_id ID of a question
-     *
-     * @return Question return a question object
-     * @throws exception 
-     * @access public
-     */
-    public function get(int $question_id) : Question
-    {
-        
-    }
-
-
 }
